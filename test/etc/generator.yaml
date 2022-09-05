@@ -5,9 +5,15 @@ DomainConfig:
 DeliveryConfig:
   Path: ./internal/delivery
   Package: delivery
+  ConverterConfig:
+    Path: ./internal/delivery/converter
+    Package: converter
 UsecaseConfig:
   Path: ./internal/usecase
   Package: domain
 RepositoryConfig:
   Path: ./internal/repository
   Package: repository
+  ConverterConfig:
+    Path: ./internal/repository/converter
+    Package: converter

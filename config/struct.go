@@ -22,6 +22,10 @@ type UsecaseConfig struct {
 	Package string
 }
 type DeliveryConfig struct {
-	Path    string
-	Package string
+	Path            string
+	Package         string
+	ConverterConfig struct {
+		Path    string
+		Package string
+	}
 }

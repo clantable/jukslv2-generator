@@ -7,6 +7,7 @@ package cmd
 import (
 	"github.com/clantable/jukslv2-generator/config"
 	"github.com/clantable/jukslv2-generator/internal/delivery"
+	"github.com/clantable/jukslv2-generator/util"
 	"github.com/spf13/cobra"
 	"github.com/zeromicro/go-zero/core/conf"
 )
@@ -24,6 +25,10 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var c config.Config
 		conf.MustLoad(cfgFile, &c)
+		err := util.GenDir(c.DeliveryConfig.Path)
+		if err != nil {
+			panic(err)
+		}
 		delivery.BadgeGen(c)
 	},
 }

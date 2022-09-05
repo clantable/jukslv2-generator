@@ -1,0 +1,31 @@
+package {{.package}}
+
+import (
+	"github.com/clantable/juksl-v2/services/{{.service}}{{.domainPath}}"
+	"github.com/clantable/juksl-v2/services/{{.service}}/pb"
+)
+
+func {{.Model}}ConverterToDomain(in *domain.{{.Model}}) *pb.{{.Model}}Params {
+	return &pb.{{.Model}}Params{
+	/* converter to domain */
+	}
+}
+
+func {{.Model}}ConverterToRPC(in *pb.{{.Model}}Params) *domain.{{.Model}} {
+	return &domain.{{.Model}}{
+	/* converter to rpc */
+	}
+}
+
+func {{.Model}}ConverterOfFetchResultToDomain(data *domain.FetchResult[domain.{{.Model}}]) *pb.Fetch{{.Model}}Response {
+	var res pb.Fetch{{.Model}}Response
+	var meta pb.PaginaitonMeta // res.Metaに直接代入厳禁
+	meta.Page = uint32(data.Meta.Page)
+	meta.PerPage = uint32(data.Meta.PerPage)
+	meta.TotalPages = uint32(data.Meta.TotalPages)
+	res.Meta = &meta
+	for _, data := range data.Data {
+		res.Data = append(res.Data, {{.Model}}ConverterToDomain(data))
+	}
+	return &res
+}
