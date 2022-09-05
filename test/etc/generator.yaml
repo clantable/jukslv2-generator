@@ -1,0 +1,13 @@
+ServiceName: lists
+DomainConfig:
+  Path: ./internal/domain
+  Package: domain
+DeliveryConfig:
+  Path: ./internal/delivery
+  Package: delivery
+UsecaseConfig:
+  Path: ./internal/usecase
+  Package: domain
+RepositoryConfig:
+  Path: ./internal/repository
+  Package: repository
