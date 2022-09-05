@@ -20,6 +20,3 @@ UsecaseConfig:
 RepositoryConfig:
   Path: ./internal/repository
   Package: repository
-  ConverterConfig:
-    Path: ./internal/repository/converter
-    Package: converter
