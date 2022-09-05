@@ -1,0 +1,82 @@
+package {{.package}}
+
+import (
+	"context"
+
+	"github.com/clantable/juksl-v2/services/{{.service}}/{{.path}}/delivery/converter"
+	"github.com/clantable/juksl-v2/services/{{.service}}/{{.path}}/usecase"
+	"github.com/clantable/juksl-v2/services/{{.service}}/pb"
+)
+
+
+func (s *{{.Service}}Server) Store{{.Model}}(ctx context.Context, in *pb.{{.Model}}Params) (*pb.{{.Model}}Params, error) {
+	data := converter.{{.Model}}ConverterToDomain(in)
+	if err := data.Validate(); err != nil {
+		return nil, err
+	}
+	newData, err := cs.uc.Store(data)
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToRPC(newData)
+	return out, nil
+}
+
+func (s *{{.Service}}Server) Fetch{{.Model}}(ctx context.Context, in *pb.FetchConfig) (*pb.Fetch{{.Model}}Response, error) {
+	query := converter.ConvertFetchQueryToDomain(in)
+	data, _, err := s.svcCtx.{{.Model}}.Fetch(query)
+	if err != nil {
+		return nil, err
+	}
+	res := converter.{{.Model}}ConverterOfFetchResultToRPC(data)
+	return res, nil
+}
+
+func (s *{{.Service}}Server) GetByID{{.Model}}(ctx context.Context, in *pb.GetByIDParams) (*pb.{{.Model}}Params, error) {
+	{{.model}}, err := s.svcCtx.{{.Model}}.GetByID(uint(in.GetId()), in.GetPreload()...)
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToDomain({{.model}})
+	return out, nil
+}
+
+func (s *{{.Service}}Server) Update{{.Model}}(ctx context.Context, in *pb.Update{{.Model}}Params) (*pb.{{.Model}}Params, error) {
+	pre{{.Model}} := converter.{{.Model}}ConverterToDomain(in.{{.Model}})
+	if err := pre{{.Model}}.Validate(); err != nil {
+		return nil, err
+	}
+	updated{{.Model}}, err := s.svcCtx.{{.Model}}.Update(uint(in.GetId()), pre{{.Model}})
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToRPC(updated{{.Model}})
+	return out, nil
+}
+
+func (s *{{.Service}}Server) SoftDelete{{.Model}}(ctx context.Context, in *pb.ID) (*pb.{{.Model}}Params, error) {
+	, err := s.svcCtx.{{.Model}}.SoftDelete(uint(in.GetId()))
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToDomain({{.model}})
+	return out, nil
+}
+
+func (s *{{.Service}}Server) HardDelete{{.Model}}(ctx context.Context, in *pb.ID) (*pb.{{.Model}}Params, error) {
+	{{.model}}, err := s.svcCtx.{{.Model}}.HardDelete(uint(in.GetId()))
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToDomain({{.model}})
+	return out, nil
+}
+
+func (s *{{.Service}}Server) Restore{{.Model}}(ctx context.Context, in *pb.ID) (*pb.{{.Model}}Params, error) {
+	{{.model}}, err := s.svcCtx.{{.Model}}.Restore(uint(in.GetId()))
+	if err != nil {
+		return nil, err
+	}
+	out := converter.{{.Model}}ConverterToDomain({{.model}})
+	return out, nil
+}
