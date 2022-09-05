@@ -2,6 +2,12 @@ ServiceName: lists
 DomainConfig:
   Path: ./internal/domain
   Package: domain
+  ExceptFiles:
+    # _test.goは自動検知される
+    - common.go
+    - fetch_config.go
+    - model_info.go
+    - model.go
 DeliveryConfig:
   Path: ./internal/delivery
   Package: delivery

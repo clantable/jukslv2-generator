@@ -9,8 +9,9 @@ type Config struct {
 }
 
 type DomainConfig struct {
-	Path    string
-	Package string
+	Path        string
+	Package     string
+	ExceptFiles []string
 }
 
 type RepositoryConfig struct {
