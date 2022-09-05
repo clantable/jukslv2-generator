@@ -5,9 +5,11 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/clantable/jukslv2-generator/config"
+	"github.com/clantable/jukslv2-generator/internal/repository"
+	"github.com/clantable/jukslv2-generator/util"
 	"github.com/spf13/cobra"
+	"github.com/zeromicro/go-zero/core/conf"
 )
 
 // repositoryCmd represents the repository command
@@ -21,7 +23,13 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("repository called")
+		var c config.Config
+		conf.MustLoad(cfgFile, &c)
+		err := util.GenDir(c.RepositoryConfig.Path)
+		if err != nil {
+			panic(err)
+		}
+		repository.BadgeGen(c)
 	},
 }
 

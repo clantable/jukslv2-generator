@@ -1,0 +1,23 @@
+package repository
+
+import (
+	"github.com/clantable/juksl-v2/services/{{.service}}{{.domainPath}}"
+	_ "github.com/golang/mock/mockgen/model"
+)
+
+type {{.Model}}Repository interface {
+	CommonRepository[domain.{{.Model}}]
+}
+
+// implement common repository
+type {{.model}}RepositoryImpl struct {
+	CommonRepository[domain.{{.Model}}]
+	db        *gorm.DB
+	companyID uint
+}
+
+func New{{.Model}}Repository(commonRepository CommonRepository[domain.{{.Model}}]) {{.Model}}Repository {
+	res := &{{.model}}RepositoryImpl{}
+	res.CommonRepository = commonRepository
+	return res
+}

@@ -1,0 +1,24 @@
+package {{.package}}
+
+import (
+	"github.com/clantable/juksl-v2/services/{{.service}}/{{.domainPath}}/domain"
+	"github.com/clantable/juksl-v2/services/{{.service}}/{{.repositoryPath}}/repository"
+	_ "github.com/golang/mock/mockgen/model"
+)
+
+type {{.Model}}Usecase interface {
+	CommonUsecase[domain.{{.Model}}]
+}
+
+// implement template usecase
+type {{.model}}UsecaseImpl struct {
+	CommonUsecase[domain.{{.Model}}]
+	repo repository.{{.Model}}Repository
+}
+
+func New{{.Model}}Usecase(commonUsecase CommonUsecase[domain.{{.Model}}], repo repository.{{.Model}}Repository) {{.Model}}Usecase {
+	res := &{{.model}}UsecaseImpl{}
+	res.CommonUsecase = commonUsecase
+	res.repo = repo
+	return res
+}

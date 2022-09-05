@@ -10,7 +10,7 @@ DeliveryConfig:
     Package: converter
 UsecaseConfig:
   Path: ./internal/usecase
-  Package: domain
+  Package: usecase
 RepositoryConfig:
   Path: ./internal/repository
   Package: repository
