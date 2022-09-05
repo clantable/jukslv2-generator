@@ -1,8 +1,8 @@
 package {{.package}}
 
 import (
-	"github.com/clantable/juksl-v2/services/{{.service}}/{{.domainPath}}/domain"
-	"github.com/clantable/juksl-v2/services/{{.service}}/{{.repositoryPath}}/repository"
+	"github.com/clantable/juksl-v2/services/{{.service}}{{.domainPath}}/domain"
+	"github.com/clantable/juksl-v2/services/{{.service}}{{.repositoryPath}}/repository"
 	_ "github.com/golang/mock/mockgen/model"
 )
 
